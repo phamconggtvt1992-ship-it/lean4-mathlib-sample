@@ -15,8 +15,13 @@ jobs:
       - uses: actions/checkout@v4
       - uses: leanprover/lean-action@v1
       - name: No sorry, admit, native_decide or new axioms in the sources
-        run: "! grep -rnE '\bsorry\b|\badmit\b|native_decide|^\s*axiom\b' LeanDemo LeanDemo.lean"
+        run: |
+          if grep -rnE '\bsorry\b|\badmit\b|native_decide|^\s*axiom\b' LeanDemo LeanDemo.lean; then
+            echo "forbidden construct found"; exit 1
+          fi
       - name: Axiom audit (only propext, Classical.choice, Quot.sound)
         run: |
           lake env lean Axioms.lean | tee axioms.out
-          ! grep -vE "depends on axioms: \[(propext|Classical\.choice|Quot\.sound)(, (propext|Classical\.choice|Quot\.sound))*\]$|does not depend on any axioms$" axioms.out
+          if grep -vE "depends on axioms: \[(propext|Classical\.choice|Quot\.sound)(, (propext|Classical\.choice|Quot\.sound))*\]$|does not depend on any axioms$" axioms.out; then
+            echo "unexpected axiom"; exit 1
+          fi
