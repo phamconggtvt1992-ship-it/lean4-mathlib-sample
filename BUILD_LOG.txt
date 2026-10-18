@@ -1,0 +1,18 @@
+# Clean build of the LeanDemo modules, 2026-10-18 (Windows 11, x86_64)
+$ lean --version
+Lean (version 4.36.0-rc1, x86_64-w64-windows-gnu, commit c9afcddf514a6772bd4d649f7cfc04eff0b9f15e, Release)
+$ lake --version
+Lake version 5.0.0-src+c9afcdd (Lean version 4.36.0-rc1)
+$ rm -rf .lake/build/lib/lean/LeanDemo* .lake/build/ir/LeanDemo*   # force a rebuild of the sample only
+$ lake build   # (Mathlib from the prebuilt cache; tail of the output)
+✔ [18110/18122] Built LeanDemo.RealIneq (12s)
+✔ [18112/18122] Built LeanDemo.Distance3D (13s)
+✔ [18114/18122] Built LeanDemo.Decision (12s)
+✔ [18116/18122] Built LeanDemo.FixedPoint (12s)
+✔ [18118/18122] Built LeanDemo.FalseFlag (12s)
+✔ [18120/18122] Built LeanDemo (11s)
+Build completed successfully (18122 jobs).
+exit code: 0
+$ grep -rnE '\bsorry\b|\badmit\b|native_decide|^\s*axiom\b' LeanDemo LeanDemo.lean
+(no matches)
+$ lake env lean Axioms.lean > AXIOMS.txt   # exit 0, see AXIOMS.txt

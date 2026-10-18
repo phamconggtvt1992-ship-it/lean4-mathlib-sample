@@ -1,0 +1,19 @@
+name = "lean_demo"
+version = "0.1.0"
+keywords = ["math"]
+defaultTargets = ["LeanDemo"]
+
+[leanOptions]
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
+relaxedAutoImplicit = false
+weak.linter.mathlibStandardSet = true
+weak.linter.style.header = false # sample project: no Mathlib copyright header
+maxSynthPendingDepth = 3
+
+[[require]]
+name = "mathlib"
+scope = "leanprover-community"
+rev = "v4.36.0-rc1"
+
+[[lean_lib]]
+name = "LeanDemo"
